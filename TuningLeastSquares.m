@@ -102,37 +102,9 @@ end
 
 R2 = 1 - ss_res/ss_tot;
 
-R2
 
 [m,v]=max(fitted_firing_rates);
 max_tuned_angle = fitted_angles(v);
 
-rsquare = R2
-output = max_tuned_angle
-
-%s = spline(angles, firing_rates);
-%cs = csapi(angles,firing_rates);
-%fnplt(cs, 4);
-%plot(angles, smooth(firing_rates), 'LineWidth', 2.5);
-%s = spap2(5, 4, angles, smooth(firing_rates));
-
-%{
-options = fitoptions('Method','Smooth','SmoothingParam',0.95);
-[f,gof] = fit(angles, firing_rates,'smoothingspline', options);
-h = plot(f, angles, smooth(firing_rates));
-set(h,  'LineWidth', 2.5, 'MarkerSize', 0.01);
-
-hold on;
-plot(angles, firing_rates, '*', 'MarkerSize', msz);
-
-set(gca, 'FontSize', fsz, 'LineWidth', 2.5);
-xlabel('Angle');
-ylabel('Firing Rate');
-xlim([0,2*pi]);
-legend('off'); 
-
-display('rsquare');
-gof.rsquare
-%}
-%saveas(gcf,'Tuning6.fig');
-%saveas(gcf,'Tuning6.eps', 'epsc');
+rsquare = R2;
+output = max_tuned_angle;

@@ -34,7 +34,6 @@ for i = 1 : nbr_files
     ReachData(i).times = times(1:end-1)';
 end
 
-Data = ReachData;
 return_data = ReachData;
 
 end

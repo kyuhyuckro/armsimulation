@@ -56,7 +56,6 @@ options = fitoptions('Method','Smooth','SmoothingParam',0.95);
 [f,gof,f2] = fit(angles, firing_rates,'smoothingspline', options);
 %[f,gof] = fit(angles, firing_rates,'poly3');
 rsquare = gof.rsquare;
-gof.rsquare
 
 if VISUALIZE
     h = plot(f, angles, smooth(firing_rates));
