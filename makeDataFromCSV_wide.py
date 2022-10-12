@@ -31,6 +31,8 @@ def trainFromCSV(csvName,outputFolder,neuron_num):
     # ==================================================
     neuron_mid = np.round(neuron_num/2)
     neuron_outer = np.round(neuron_mid/2)
+ 
+    
     # Make layers:
     #layers_num = int(input("enter number of network layers: "))
     #folder_name = str(layers_num) + 'layers'

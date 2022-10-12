@@ -20,8 +20,8 @@ def trainFromCSV(csvName,outputFolder,add_amt):
         os.makedirs(outputFolder)
         
     merged_data=pd.read_csv(csvName)
-    X=merged_data.iloc[:,1:13]
-    y=merged_data.iloc[:,13:]
+    X=merged_data.iloc[:,1:13].astype(float)
+    y=merged_data.iloc[:,13:].astype(float)
 
     all_times = X.iloc[:,0]
 

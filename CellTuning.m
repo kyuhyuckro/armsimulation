@@ -31,7 +31,8 @@ for index = 1 : 7
     
     %center = [0.304432; -0.186052; 0.207766];
     center = [0.304432; 0.207766];
-    target = [target.x, target.z];
+    f = fields(target);
+    target = [target.(f{1}) target.(f{2})];
     if(size(target,1) == 1)
         target = target';
     end

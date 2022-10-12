@@ -10,6 +10,7 @@ max_nbr_timesteps = 0;
 
 for i = 1 : nbr_files
     filename = folder_name + files(i).name;
+    clear C target times
     load(filename); 
     ReachData(i).A = C; 
     ReachData(i).target = target;

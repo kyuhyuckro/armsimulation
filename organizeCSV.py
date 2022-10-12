@@ -2,13 +2,11 @@
 import os
 
 tor_idx = [0, 12, 13, 15, 16, 17, 32, 33, 35, 36, 37]
-tau_idx = [42, 43, 44, 45, 46];
-k_ix = [8, 9]
+tau_idx = [42, 43, 44, 45, 46]
+k_ix = [7, 8]
 
 def organize(torquePath, kinPath, csvName = "merged_data_.csv", type = 0):
-
-    if type == 1:
-        k_ix = [8, 10]
+    k_ix = [7, 8, 9]
  
     # Get the list of all files and directories
     t_dir_list = os.listdir(torquePath)
@@ -37,9 +35,9 @@ def organize(torquePath, kinPath, csvName = "merged_data_.csv", type = 0):
         if i == 0:
             writeS = ",".join(str(s) for s in [T + K + T2])
             print(writeS)
-            writeS.replace("\'", "")
             print(writeS)
-            
+            writeS = writeS.replace(" ", "")
+            writeS = writeS.replace("'", "")
             fOut.write(writeS[1:-1])
             #fOut.write(",".join(str([T + K + T2])))
             fOut.write("\n")
@@ -55,7 +53,8 @@ def organize(torquePath, kinPath, csvName = "merged_data_.csv", type = 0):
             K = [k_data[i] for i in k_ix];
             
             writeS = ",".join(str(s) for s in [T + K + T2])
-            writeS.replace("\'", "")
+            writeS = writeS.replace(" ", "")
+            writeS = writeS.replace("'", "")
             fOut.write(writeS[1:-1])
             fOut.write("\n")
             

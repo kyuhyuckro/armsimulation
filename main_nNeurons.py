@@ -24,7 +24,7 @@ locStr = 'merged_data.csv'
 type = 1;
 
 # Uncomment to simulate:
-#sim.simulateMotion(type = 1, nbr_targets = 8, outPath = outPath)
+sim.simulateMotion(type = 1, nbr_targets = 8, outPath = outPath, intervals= 60)
 
 OC.organize(outPath + "torque_solutions",outPath + "path_solutions", csvName= outPath + locStr)
 

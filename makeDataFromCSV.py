@@ -11,17 +11,19 @@ from sklearn.pipeline import Pipeline
 from keras import backend as K
 import scipy.io
 import os
+import json
 
 def trainFromCSV(csvName,outputFolder,layers_num):
-    
+
+
     # Check for existance of output folder, if no folder, make it.
     isExist = os.path.exists(outputFolder)
     if not os.path.exists(outputFolder):
         os.makedirs(outputFolder)
         
     merged_data=pd.read_csv(csvName)
-    X=merged_data.iloc[:,1:13]
-    y=merged_data.iloc[:,13:]
+    X=merged_data.iloc[:,1:14]
+    y=merged_data.iloc[:,14:]
 
     all_times = X.iloc[:,0]
 
@@ -30,12 +32,11 @@ def trainFromCSV(csvName,outputFolder,layers_num):
     # np.random.seed(seed)
     # ==================================================
 
-
     # Make layers:
     #layers_num = int(input("enter number of network layers: "))
     #folder_name = str(layers_num) + 'layers'
     model = Sequential()
-    model.add(Dense(256, input_dim=12, kernel_initializer='normal', activation='relu')) 
+    model.add(Dense(256, input_dim=X.shape[1], kernel_initializer='normal', activation='relu')) 
     if layers_num < 3: 
         print("not possible for network, try again")
     else: 
@@ -44,10 +45,15 @@ def trainFromCSV(csvName,outputFolder,layers_num):
             model.add(Dense(128, kernel_initializer='normal', activation='relu'))
     model.add(Dense(10, kernel_initializer='normal', activation='relu'))
     model.add(Dense(5, kernel_initializer='normal'))
-    model.compile(loss='mean_squared_error', optimizer='adam')
+    model.compile(loss='mean_squared_error', optimizer='adam', metrics='accuracy')
 
-    
     x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+    model.fit(x_train, y_train, epochs=10, batch_size=10)
+    
+    mean_squared_error, accuracy = model.evaluate(x_test, y_test)
+    print('Accuracy: %.2f' % (accuracy*100) + "%...")
+    print('MSE: %.20f' % (mean_squared_error) + "...")
+    
     model.summary()
     num_layers = len(model.layers)
     num_neurons = 0
@@ -61,12 +67,13 @@ def trainFromCSV(csvName,outputFolder,layers_num):
     cond = 0
     C = np.empty((0,num_neurons), int)
     time = np.empty((0,1), int)
-    print(X.shape[0])
+    #print(X.shape[0])
+    print("Compiling results...")
     for i in range (0,X.shape[0]-1):
 
         x = X.iloc[i,:]
         x = np.array(x)
-        x.shape = (1,12)
+        x.shape = (1,X.shape[1])
 
         ctime = np.array(all_times[i])
         ctime.shape = (1,1)
@@ -80,16 +87,19 @@ def trainFromCSV(csvName,outputFolder,layers_num):
             b = np.concatenate([b, a])
 
         C = np.vstack((C, b))
-        print (C.shape)
+        #print (C.shape)
 
-        target1 = X.iloc[i,10:12]
-        print(X.iloc[i,10:12])
-        target2 = X.iloc[i+1,10:12]
+        target1 = X.iloc[i,10:13]
+        #print(X.iloc[i,10:12])
+        target2 = X.iloc[i+1,10:13]
         if np.linalg.norm(target1 - target2) > 1e-6:
-            print (i)
-            print (target1)
-            print (target2)
-            scipy.io.savemat(outputFolder + '/data1100' + str(cond) + '.mat', mdict={'C': C, 'time':time, 'target':target1})
+            #print (i)
+            #print (target1)
+            #print (target2)
+            scipy.io.savemat(outputFolder + '/data1100' + str(cond) + '.mat', mdict={'C': C, 'time':time, 'target':target1, 'accuracy' : accuracy, "MSE": mean_squared_error})
             C = np.empty((0,num_neurons), int)
             time = np.empty((0,1), int)
             cond = cond + 1
+            print("Compiled " + str(i) + " of " + str(X.shape[0]-1) + "...")
+    
+    print("Compiling done!")
