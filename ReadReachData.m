@@ -1,7 +1,7 @@
 %addpath 'fromMarksLibraries' -END 
 %addpath 'CircStat2010d' -END
 
-folder_name = 'nn';  %'data'; %'nn_47_data'; %nn_8_data %'rnn_data'; %'lstm_data', %'data1100'
+folder_name = 'torques';  %'data'; %'nn_47_data'; %nn_8_data %'rnn_data'; %'lstm_data', %'data1100'
 
 %files = dir(fullfile (folder_name, '*.mat'));
 files = dir(fullfile(folder_name, '*.mat'));
