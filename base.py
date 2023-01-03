@@ -15,6 +15,7 @@ from sklearn.pipeline import Pipeline
 from keras import backend as K
 import scipy.io
 
+#neural network to train arm data
 merged_data=pd.read_csv('merged_data_new.csv')
 X=merged_data.iloc[:,1:13]
 y=merged_data.iloc[:,13:]

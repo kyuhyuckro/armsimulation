@@ -14,6 +14,7 @@ from sklearn.pipeline import Pipeline
 from keras import backend as K
 import scipy.io
 
+#code used for looking at building and comparing different layers of neural network 
 merged_data=pd.read_csv('merged_data.csv')
 X=merged_data.iloc[:,1:13]
 y=merged_data.iloc[:,13:]
